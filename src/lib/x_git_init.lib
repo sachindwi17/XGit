@@ -1,0 +1,34 @@
+void makeFile(string fileName) {
+    std::ofstream file;
+    file.open(fileName);
+    file.close();
+}
+
+void makeFile(string fileName, string data) {
+    std::ofstream file;
+    file.open(fileName);
+    file<<data;
+    file.close();
+}
+
+bool isDirExists(const char* path) {
+    struct stat info;
+    if(stat(path, &info) != 0) {
+        return false;
+    }else if(info.st_mode & S_IFDIR) {
+        return true;
+    }else {
+        return false;
+    }
+}
+
+bool x_git_init() {
+    if(!isDirExists(x_git_dir)) {
+        x_git_dir_init = true;
+        // create .git directory if not exists
+        system("git init");
+        makeFile("./.gitignore");
+        return true;
+    }
+    return false;
+}

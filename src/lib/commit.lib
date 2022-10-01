@@ -1,0 +1,8 @@
+void commit() {
+    // print files status.
+    fflush(stdin);
+    string msg;
+    cout<<"Enter commit message: ";
+    getline(cin, msg);
+    system(("git commit -m \""+msg+"\"").c_str());
+}

@@ -1,0 +1,68 @@
+void setUtilData(string key, string value) {
+    // Create a file on the root file system and store all the nessory information on it.
+    //1. Create a pair of key and value.
+    char* finalValue = (char*) malloc(strlen(key.c_str()) + strlen(value.c_str()) + 4);
+    strcpy(finalValue, key.c_str());
+    strcat(finalValue, "=");
+    strcat(finalValue, value.c_str());
+    std::ofstream fout;
+    //2. Store the pair of key and value in file.
+    fout.open(UTILS_CONFIG_FILE, ios::app);
+    fout<<finalValue<<std::endl;
+    fout.close();
+}
+
+string getUtilData(string key) {
+    int found = 0;
+    std::string temp;
+    std::ifstream fin;
+    fin.open(UTILS_CONFIG_FILE, ios::in);
+    for(std::string line; std::getline(fin, line);) {
+        if(line.find(key) != std::string::npos) {
+            temp = line.substr(strlen(key.c_str()) + ESCAPE_SIZE, line.length());
+            found += 1;
+            break;
+        }
+    }
+    fin.close();
+    return found >= 1 ? temp : NULL;
+}
+
+void deleteUtilConfig() {
+    remove(UTILS_CONFIG_FILE);
+}
+
+void clearScreen() {
+    cout << "\033[2J\033[1;1H";
+}
+
+void printColoredText(string text, string color) {
+    if(color == "red") {
+        cout<<"\033[1;31m"<<text<<"\033[0m";
+    } else if(color == "green") {
+        cout<<"\033[1;32m"<<text<<"\033[0m";
+    } else if(color == "yellow") {
+        cout<<"\033[1;33m"<<text<<"\033[0m";
+    } else if(color == "blue") {
+        cout<<"\033[1;34m"<<text<<"\033[0m";
+    } else if(color == "magenta") {
+        cout<<"\033[1;35m"<<text<<"\033[0m";
+    } else if(color == "cyan") {
+        cout<<"\033[1;36m"<<text<<"\033[0m";
+    } else if(color == "white") {
+        cout<<"\033[1;37m"<<text<<"\033[0m";
+    } else {
+        cout<<text;
+    }
+}
+
+string getAllFileData(string path) {
+    std::ifstream fin;
+    std::string temp = "";
+    fin.open(path, ios::in);
+    for(std::string line; getline(fin, line);) {
+        temp += line;
+    }
+    fin.close();
+    return temp;
+}

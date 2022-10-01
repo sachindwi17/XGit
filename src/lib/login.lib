@@ -1,0 +1,20 @@
+// Contains all the utility methods related to login.
+
+void github_login() {
+    // Create a git ssh public rsa token.
+    system(("ssh-keygen -t rsa -b 4096 -C \"" + AUTHOR_EMAIL + "\"").c_str());
+    // save the public rsa token to the environment variable.
+    char *path = new char(30);
+    strcpy(path, getenv("HOMEDRIVE"));
+    strcat(path, getenv("HOMEPATH"));
+    string output = getAllFileData(string(path) + "/.ssh/id_rsa.pub");
+    setUtilData("ssh-rsa", output);
+    // show the public rsa token and name for public rsa token.
+    printColoredText("Public RSA token name: Login Token\n", YELLOW);
+    fflush(stdin);
+    printColoredText("Token:\n", BLUE);
+    cout<<output<<endl;
+    // show the github url where the user can paste the public rsa token.
+    printColoredText("GitHub: https://github.com/settings/ssh/new\n", BLUE);
+    printColoredText("Enter the above details on the above github link and save that.", YELLOW);
+}

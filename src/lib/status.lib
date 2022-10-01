@@ -1,0 +1,4 @@
+void status() {
+    // print files status.
+    system("git status");
+}

@@ -1,0 +1,8 @@
+void checkout() {
+    // Checkout branch
+    fflush(stdin);
+    string msg;
+    cout<<"Enter branch name for checkout: ";
+    getline(cin, msg);
+    system(("git checkout " + msg).c_str());
+}

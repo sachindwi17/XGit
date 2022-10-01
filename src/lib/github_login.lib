@@ -1,0 +1,62 @@
+void checkGithubLogin() {
+    // Check current login user.
+    if (AUTHOR_EMAIL == "unknown" || AUTHOR_NAME == "unknown") {
+        cout<<"You are not logged in. Please login first."<<endl;
+        githubLogin();
+    } else {
+        printColoredText("You are logged in as " + AUTHOR_NAME + " <" + AUTHOR_EMAIL + ">\n", YELLOW);
+    }
+}
+
+void resetGithubLogin() {
+    // Reset github login.
+    char *path = new char(30);
+    strcpy(path, getenv("HOMEDRIVE"));
+    strcat(path, getenv("HOMEPATH"));
+
+    // remove the public rsa token.
+    string finalPathPub = string(path) + "/.ssh/id_rsa.pub";
+    remove(finalPathPub.c_str());
+
+    // remove the private rsa token.
+    string finalPathPrev = string(path) + "/.ssh/id_rsa";
+    remove(finalPathPrev.c_str());
+
+    // success message.
+    printColoredText("GitHub logout successfully.\n", GREEN);
+}
+
+void githubLogin() {
+    // Login to github.
+    while(true) {
+        fflush(stdin);
+        int choice;
+        cout<<"1. GitHub Login.\n2. Check Current Login User\n3. Reset Login\n4. Back\n5. Exit"<<endl;
+        printColoredText("Choose one of the option: ", MAGENTA);
+        cin>>choice;
+        if(!cin.fail() && (choice >= 1 && choice <= 5)) {
+            switch(choice) {
+                case 1:
+                    github_login();
+                    break;
+                case 2:
+                    checkGithubLogin();
+                    break;
+                case 3:
+                    resetGithubLogin();
+                    break;
+                case 4:
+                    clearScreen();
+                    return;
+                case 5:
+                    printColoredText("Bye :)\n", YELLOW);
+                    exit(0);
+                default:
+                    cout<<"Please choose an valid option!"<<choice<<endl;
+            }
+        }else {
+            printColoredText("Detect unusual activity! Exited.\n", RED);
+            exit(0);
+        }
+    }
+}

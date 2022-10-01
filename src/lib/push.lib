@@ -1,0 +1,5 @@
+void push() {
+    // push new commits to remote repository.
+    fflush(stdin);
+    system("git push");
+}

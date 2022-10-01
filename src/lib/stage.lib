@@ -1,0 +1,4 @@
+void stage() {
+    // check if .git directory exists, staged files will be stored in .git directory
+    system("git add .");
+}

@@ -1,0 +1,5 @@
+void see_branch() {
+    // See all branches.
+    fflush(stdin);
+    system("git branch");
+}

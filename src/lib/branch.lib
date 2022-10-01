@@ -1,0 +1,8 @@
+void branch() {
+    // create new branch.
+    fflush(stdin);
+    string msg;
+    cout<<"Enter new branch name: ";
+    getline(cin, msg);
+    system(("git branch " + msg).c_str());
+}

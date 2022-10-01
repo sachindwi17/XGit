@@ -1,0 +1,35 @@
+void setAuthorName(string name) {
+    setUtilData("name", name);
+}
+
+void setAuthorEmail(string email) {
+    setUtilData("email", email);
+}
+
+string getAuthorName() {
+    return getUtilData("name");
+}
+
+string getAuthorEmail() {
+    return getUtilData("email");
+}
+
+bool firstTimeSetupDone() {
+    // This method call every time to check the configuration are done or not.
+    std::fstream file;
+    file.open(UTILS_CONFIG_FILE, ios::in);
+    if(file.is_open()) {
+        FIRST_TIME_SETUP_DONE = true;
+        file.close();
+    } else {
+        FIRST_TIME_SETUP_DONE = false;
+    }
+    if(FIRST_TIME_SETUP_DONE) {
+        // after enter this block the FIRST_TIME_SETUP_DONE constant is true.
+        AUTHOR_NAME = getAuthorName();
+        AUTHOR_EMAIL = getAuthorEmail();
+        system(("git config --global user.name \"" + AUTHOR_NAME + "\"").c_str());
+        system(("git config --global user.email \"" + AUTHOR_EMAIL + "\"").c_str());
+    }
+    return FIRST_TIME_SETUP_DONE;
+}

@@ -1,0 +1,6 @@
+void log() {
+    // print logs of commits.
+    fflush(stdin);
+    clearScreen();
+    system("git log");
+}
